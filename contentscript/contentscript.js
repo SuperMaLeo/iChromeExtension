@@ -7,21 +7,29 @@
 
     // Chrome onRequest Listener (Chrome的Request監聽事件)
     chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
+        console.log('enter contentscript Listener function');
+
         if (request.action == "Friend") {
-
-            var d = $(document);
-            d.scrollTop(d.height());
-
-            if (tempHeight != d.height()) {
-                tempHeight = d.height();
-                return;
-            }
-
-            var t = $(this).scrollTop();
-
-            downloadFriendInfo();
+            moveDownScrollbar();
         }
     });
+
+    function moveDownScrollbar() {
+        console.log('enter moveDownScrollbar function');
+
+        var d = $(document);
+        d.scrollTop(d.height());
+
+        if (tempHeight != d.height()) {
+            tempHeight = d.height();
+            setTimeout(moveDownScrollbar, 2000);
+            return;
+        }
+
+        // var t = $(this).scrollTop();
+
+        downloadFriendInfo();
+    }
 
     function downloadFriendInfo() {
         console.log('enter downloadFriendInfo function');
