@@ -1,11 +1,24 @@
 /// <reference path="C:/Users/leo/typings/tsd.d.ts" />
 
-(function() {
+(function () {
     console.log('contentscript.js running...');
 
+    var tempHeight = 0;
+
     // Chrome onRequest Listener (Chrome的Request監聽事件)
-    chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+    chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
         if (request.action == "Friend") {
+
+            var d = $(document);
+            d.scrollTop(d.height());
+
+            if (tempHeight != d.height()) {
+                tempHeight = d.height();
+                return;
+            }
+
+            var t = $(this).scrollTop();
+
             downloadFriendInfo();
         }
     });
@@ -15,13 +28,26 @@
 
         // var friendInfo = document.all[0].innerHTML;
 
-        var infoArray = document.getElementsByClassName('fsl fwb fcb');
+        // document.getElementsByClassName('fsl fwb fcb');
+
+        // var infoArray = $('div.fsl.fwb.fcb');
+
+        // .find('div._5q6s._8o._8t.lfloat._ohe');
+
+        var names = $('#pagelet_timeline_medley_friends').find('div.fsl.fwb.fcb');
+
+        var photos = $('#pagelet_timeline_medley_friends').find('img._s0._rv.img');
+
+        if (!names || names.length == 0) {
+            return;
+        }
 
         var context = '';
-        for (var index in infoArray) {
-            var info = infoArray[index].innerHTML;
-            if (info) {
-                context += info + "\r\n";
+        for (var index in names) {
+            var name = (names[index]) ? names[index].innerHTML : '';
+            var photo = (photos[index]) ? photos[index].outerHTML : '';
+            if (name || photo) {
+                context += photo + name + "\r\n<br /><br />\r\n";
             }
         }
 

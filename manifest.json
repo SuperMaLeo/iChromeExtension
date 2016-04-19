@@ -31,7 +31,7 @@
             ],
             "js": [
                 "lib/file/FileSaver.js",
-                "lib/jquery/jquery-2.2.3.js",
+                "lib/jquery/jquery-2.2.3.min.js",
                 "contentscript/contentscript.js"
             ],
             "run_at": "document_idle",
