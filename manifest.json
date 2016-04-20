@@ -4,9 +4,7 @@
     "manifest_version": 2,
     "description": "iChromeExtension",
     "browser_action": {
-        "default_icon": {
-            "128": "images/icons/icon_Mushroom_Bee.png"
-        },
+        "default_icon": "images/icons/icon_Mushroom_Bee.png",
         "default_title": "iChromeExtension"
     },
     "icons": {
@@ -14,7 +12,8 @@
     },
     "background": {
         "scripts": [
-            "background/background.js"
+            "background/background.js",
+            "background/eventPage.js"
         ],
         "persistent": true
     },
