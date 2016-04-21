@@ -45,12 +45,32 @@
             // div2w3.appendChild( document.createTextNode( 'Hello World' ) )。
             function (mutationRecord, observer) {
 
-                // 若 div2w3 內的子節點多於一個
-                if (div2w3.children.length > 1) {
+
+                /*
+                 * 我在尋找 "如何監聽 同一個 DOM 下, 另一個 javascript 發出 ajax request" 的時候
+                 *
+                 * 發現下面這段文字
+                 *
+                 * You can't listen to ajax requests (without using experimental api), 
+                 *
+                 * but you can listen to DOMSubtreeModified event that fires whenever DOM is modified
+                 */
+
+                // 觀察 "朋友" 區塊裡的 "讀取中 GIF 圖檔" 是否存在
+                // 若不存在就觸發下載 friends.html
+                var img_359img = $('#pagelet_timeline_medley_friends').find('img._359.img');
+                if (!img_359img[0]) {
                     downloadFriendInfo(); // 下載 friends.html
                     observer.disconnect(); // 停止 observer 的觀察
                     return;
                 }
+
+                // 若 div2w3 內的子節點多於一個
+                // if (div2w3.children.length > 1) {
+                //     downloadFriendInfo(); // 下載 friends.html
+                //     observer.disconnect(); // 停止 observer 的觀察
+                //     return;
+                // }
 
                 // 拉動 scrollbar 一次
                 moveDownScrollbar();
@@ -61,16 +81,6 @@
         // observe() 裡的參數可以給 : attributes: true, childList: true, subtree: true
         observer.observe(div2w3, { childList: true, subtree: true })
     }
-
-    /*
-     * 我在尋找 "如何監聽 同一個 DOM 下, 另一個 javascript 發出 ajax request" 的時候
-     *
-     * 發現下面這段文字
-     *
-     * You can't listen to ajax requests (without using experimental api), 
-     *
-     * but you can listen to DOMSubtreeModified event that fires whenever DOM is modified
-     */
 
     function moveDownScrollbar() {
         console.log('enter moveDownScrollbar function');
@@ -98,14 +108,21 @@
             return;
         }
 
+        var count = 1;
         var context = '';
         for (var index in names) {
             var name = (names[index]) ? names[index].innerHTML : '';
             var photo = (photos[index]) ? photos[index].outerHTML : '';
             if (name || photo) {
                 context += photo + name + "\r\n<br /><br />\r\n";
+                count++;
+            } else {
+                console.log('沒被印的 name = ' + name);
+                console.log('沒被印的 photo = ' + photo);
+                console.log('=--------------------------------=');
             }
         }
+        context += '共 ' + count + ' 位';
 
         var blob = new Blob([context], { type: "text/plain; charset=utf-8" });
         saveAs(blob, "friends.html");
