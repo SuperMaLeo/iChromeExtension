@@ -1,12 +1,12 @@
 (function () {
-    // Browser_Action_Click_Event
-    function Browser_Action_Click_Event() {
-        console.log('background.js running...');
+    console.log('background.js running...');
 
+    function backgroundEvent() {
         chrome.tabs.getSelected(function (tab) {
-            chrome.tabs.sendMessage(tab.id, { action: "Friend", tab: tab });
+            // 下載 FaceBook 下的朋友資訊
+            chrome.tabs.sendMessage(tab.id, { action: "storageFriendsInfo", tab: tab });
         })
     }
 
-    chrome.browserAction.onClicked.addListener(Browser_Action_Click_Event);
+    // chrome.browserAction.onClicked.addListener(backgroundEvent);
 })();

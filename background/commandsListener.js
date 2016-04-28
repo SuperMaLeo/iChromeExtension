@@ -1,9 +1,11 @@
-(function() {
+(function () {
     console.log('commandsListener.js running...');
 
-    chrome.commands.onCommand.addListener(function(command) {
+    function commandsListener(command) {
         if (command == 'reload_extension') {
             chrome.runtime.reload();
         }
-    });
+    }
+
+    // chrome.commands.onCommand.addListener(commandsListener);
 })();

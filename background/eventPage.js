@@ -1,7 +1,7 @@
 (function () {
-    function eventListener() {
-        console.log('eventPage.js running...');
+    console.log('eventPage.js running...');
 
+    function eventListener() {
         window.addEventListener('request', function (event) {
             alert(event);
         });
