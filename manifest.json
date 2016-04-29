@@ -25,6 +25,7 @@
     // {"fileSystem": ["write", "retainEntries", "directory"]} 加 select folder directories instead of files
     // =============================================
     "permissions": [
+        "tabs",
         "http://*/*",
         "https://*/*"
     ],
@@ -39,8 +40,7 @@
                 "lib/file/FileSaver.js",
                 "lib/jquery/jquery-2.2.3.min.js",
                 "contentscript/contentscript.js",
-                "contentscript/storageor.js",
-                "contentscript/fileReader.js"
+                "contentscript/storageor.js"
             ],
             "run_at": "document_idle",
             "all_frames": false

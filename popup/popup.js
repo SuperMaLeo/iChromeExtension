@@ -3,10 +3,7 @@
     // 讀檔
     function readFile() {
         var fileSelector = document.getElementById('fileSelector');
-
-        chrome.tabs.getSelected(function (tab) {
-            chrome.tabs.sendMessage(tab.id, { action: "readFile", tab: tab, fileSelector: fileSelector });
-        })
+        fileReader.read(fileSelector);
     }
 
     document.getElementById('readFile').addEventListener('click', readFile);

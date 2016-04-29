@@ -1,18 +1,35 @@
+/// <reference path="C:/Users/leo/typings/tsd.d.ts" />
+
 var fileReader = (function () {
 
+    // 檔案檢視器
     function FileViewer() {
+        // 讀檔的 util
         this.reader = new FileReader();
 
+        // 設定讀檔完成後的 call back function
         this.reader.onloadend = (function (self) {
             return function () {
+                // 執行 FileViewer.prototype.loaded
                 self.loaded();
             }
         })(this);
     }
+
+    // 為檢視器物件增加方法 (執行 load 時的方法)
     FileViewer.prototype.load = function (file) {
+        // 讀取檔案內容
+        // =======================================================
+        // this.reader.readAsText 會觸發 this.reader.onload
+        // this.reader.onload 結束後, 會觸發 this.reader.onloadend
+        // =======================================================
         this.reader.readAsText(file);
     }
+
+    // 為檢視器物件增加方法 (load 完成後的方法)
     FileViewer.prototype.loaded = function () {
+
+        // TODO : 這裡可以得到檔案內容, 目前先用 alert 秀檔案內容, 未來要做什麼再說
         alert(this.reader.result);
     }
 
@@ -38,6 +55,8 @@ var fileReader = (function () {
         // alert(s);
 
         var fileViewer = new FileViewer();
+
+        // 讀檔
         fileViewer.load(file);
     }
 
